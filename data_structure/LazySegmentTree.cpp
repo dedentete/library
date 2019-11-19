@@ -1,15 +1,15 @@
 /*
-    LazySegmentTree<int, int> seg(f, g, h, p, def, laz_def) のように宣言する
+    LazySegmentTree<ll, ll> seg(f, g, h, p, def, laz_def) のように宣言する
     RMQ and RUQ の場合 : 
-    auto f = [](int a, int b){return min(a, b);};
-    auto g = [](int a, int b){return b;};
-    auto h = [](int a, int b){returm b;};
-    auto p = [](int a, int b){return a;};
+    auto f = [](ll a, ll b){return min(a, b);};
+    auto g = [](ll a, ll b){return b;};
+    auto h = [](ll a, ll b){return b;};
+    auto p = [](ll a, ll b){return a;};
     RSQ and RAQ の場合 : 
     auto f = [](ll a, ll b){return a + b;};
     auto g = [](ll a, ll b){return a + b;};
-    auto h = [](ll a, ll b){returm a + b;};
-    auto p = [](ll a, int b){return a * b;};
+    auto h = [](ll a, ll b){return a + b;};
+    auto p = [](ll a, ll b){return a * b;};
 */
 template <typename Monoid, typename OperatorMonoid>
 struct LazySegmentTree{
