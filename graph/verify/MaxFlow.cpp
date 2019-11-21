@@ -1,0 +1,4 @@
+struct MaxFlow
+{
+    /* data */
+};
