@@ -16,7 +16,6 @@ struct UnionFind{
         init(n);
     }
 
-    //n要素で初期化
     void init(int n){
         par.resize(n);
         siz.resize(n);
@@ -26,13 +25,11 @@ struct UnionFind{
         }
     }
 
-    //木の根を求める
     int root(int x){
         if(par[x] == x) return x;
         else return par[x] = root(par[x]);
     }
 
-    //xとyの属する集合を併合
     void unite(int x, int y){
         x = root(x);
         y = root(y);

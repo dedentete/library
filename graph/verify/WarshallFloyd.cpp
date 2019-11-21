@@ -18,7 +18,7 @@ const long long MOD = 1e9 + 7;
     }
 */
 template <typename T>
-void Warshall_Floyd(vector<vector<T>> & dist){
+void WarshallFloyd(vector<vector<T>> & dist){
     int V = dist.size();
     for(int k = 0; k < V; k++){
         for(int i = 0; i < V; i++){
@@ -44,7 +44,7 @@ signed main(){
 		b--;
 		dist[a][b] = dist[b][a] = t;
 	}
-	Warshall_Floyd(dist);
+	WarshallFloyd(dist);
 	int mn = INF;
 	for(int i = 0; i < n; i++){
 		int mx = 0;

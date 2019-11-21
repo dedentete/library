@@ -1,5 +1,4 @@
 /*
-    https://github.com/beet-aizu/library/blob/master/tools/compress.cpp
     vector<long long> a(n) を座圧する場合 : 
     auto v = compress(a);
     auto m = dict(v);

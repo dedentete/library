@@ -4,7 +4,7 @@ struct BiMatch{
     vector<int> match, used;
     vector<bool> dead;
 
-    BiMatch(int V) : V(V), time(0), G(V), match(V, -1), used(V, -1), dead(V, false){} 
+    BiMatch(int V) : V(V), time(0), G(V), match(V, -1), used(V, -1), dead(V, false) {} 
 
     void add_edge(int u, int v){
         G[u].emplace_back(v);
