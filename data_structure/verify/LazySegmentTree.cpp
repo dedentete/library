@@ -38,7 +38,7 @@ struct LazySegmentTree{
     Monoid def;
     OperatorMonoid laz_def;
 
-    LazySegmentTree(F f, G g, H h, P p, Monoid def, OperatorMonoid laz_def) : f(f), g(g), h(h), p(p), def(def), laz_def(laz_def){}
+    LazySegmentTree(F f, G g, H h, P p, Monoid def, OperatorMonoid laz_def) : f(f), g(g), h(h), p(p), def(def), laz_def(laz_def) {}
 
     void build(const vector<Monoid> & vec){
         int siz = vec.size();
