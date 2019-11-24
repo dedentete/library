@@ -1,16 +1,16 @@
 using ll = long long;
 template <ll MOD = 1000000007>
 struct Mint{
-    ll v;
+    ll x;
 
-    Mint() : v(0) {}
+    Mint() : x(0) {}
     Mint(ll t){
-        v = t % MOD;
-        if(v < 0) v += MOD;
+        x = t % MOD;
+        if(x < 0) x += MOD;
     }
     
     Mint pow(ll n){
-        Mint res(1), t(v);
+        Mint res(1), t(x);
         while(n > 0){
             if(n & 1) res *= t;
             t *= t;
@@ -32,36 +32,36 @@ struct Mint{
     }
 
     Mint & operator += (Mint a){
-        v += a.v;
-        if(v >= MOD) v -= MOD;
+        x += a.x;
+        if(x >= MOD) x -= MOD;
         return *this;
     }
     Mint & operator -= (Mint a){
-        v += MOD - a.v;
-        if(v >= MOD) v -= MOD;
+        x += MOD - a.x;
+        if(x >= MOD) x -= MOD;
         return *this;
     }
     Mint & operator *= (Mint a){
-        v = 1LL * v * a.v % MOD;
+        x = 1LL * x * a.x % MOD;
         return *this;
     }
     Mint & operator /= (Mint a){
         return (*this) *= a.inv();
     }
 
-    Mint operator + (Mint a) const { return Mint(v) += a; }
-    Mint operator - (Mint a) const { return Mint(v) -= a; }
-    Mint operator * (Mint a) const { return Mint(v) *= a; }
-    Mint operator / (Mint a) const { return Mint(v) /= a; }
+    Mint operator + (Mint a) const { return Mint(x) += a; }
+    Mint operator - (Mint a) const { return Mint(x) -= a; }
+    Mint operator * (Mint a) const { return Mint(x) *= a; }
+    Mint operator / (Mint a) const { return Mint(x) /= a; }
 
-    Mint operator - () const{ return Mint(-v); }
+    Mint operator - () const{ return Mint(-x); }
 
-    bool operator == (const Mint a){ return v == a.v; }
-    bool operator != (const Mint a){ return v != a.v; }
-    bool operator < (const Mint){ return v < a.v; }
+    bool operator == (const Mint a){ return x == a.x; }
+    bool operator != (const Mint a){ return x != a.x; }
+    bool operator < (const Mint a){ return x < a.x; }
 
     friend ostream & operator << (ostream & os, const Mint &a){
-        return os << a.v;
+        return os << a.x;
     }
 
     friend istream & operator >> (istream & is, Mint &a){

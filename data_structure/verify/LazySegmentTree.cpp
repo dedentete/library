@@ -20,7 +20,7 @@ const long long MOD = 1e9 + 7;
     auto f = [](ll a, ll b){return a + b;};
     auto g = [](ll a, ll b){return a + b;};
     auto h = [](ll a, ll b){return a + b;};
-    auto p = [](ll a, ll b){return a * b;};
+    auto p = [](ll a, int b){return a * b;};
 */
 template <typename Monoid, typename OperatorMonoid>
 struct LazySegmentTree{

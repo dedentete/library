@@ -10,7 +10,13 @@ const long long LINF = 1e18;
 const long long MOD = 1e9 + 7;
 
 /*
-    基数として乱数をとりたい場合、コメントアウトをはずす
+    基数として乱数をとりたい場合 : 
+    ll B_1, B_2, MOD_1 = 1000000007, MOD_2 = 1000000009;
+    random_device rnd;
+    mt19937 mt(rnd());
+    B_1 = mt() % (MOD_1 - 2) + 2;
+    B_2 = mt() % (MOD_2 - 2) + 2;
+    RollingHash rh(s, B_1, B_2, MOD_1, MOD_2);
 */
 struct RollingHash{
     using T = long long;
@@ -21,12 +27,6 @@ struct RollingHash{
     RollingHash(string & s, T B_1 = 1007, T B_2 = 1009, T MOD_1 = 1000000007, T MOD_2 = 1000000009)
      : B_1(B_1), B_2(B_2), MOD_1(MOD_1), MOD_2(MOD_2) {
         int n = s.size();
-        /*
-        random_device rnd;
-        mt19937 mt(rnd());
-        B_1 = mt() % (MOD_1 - 2) + 2;
-        B_2 = mt() % (MOD_2 - 2) + 2;
-        */    
         hash_1.assign(n + 1, 0);
         hash_2.assign(n + 1, 0);
         pow_1.assign(n + 1, 1);
@@ -56,7 +56,12 @@ signed main(){
     REP(i,m){
         cin >> c[i];
     }
-    RollingHash rhs(s);
+    ll B_1, B_2, MOD_1 = 1000000007, MOD_2 = 1000000009;
+    random_device rnd;
+    mt19937 mt(rnd());
+    B_1 = mt() % (MOD_1 - 2) + 2;
+    B_2 = mt() % (MOD_2 - 2) + 2;
+    RollingHash rhs(s, B_1, B_2, MOD_1, MOD_2);
     vector<map<P, int>> mp(11);
     for(int i = 1; i <= 10; i++){
         for(int j = 0; j + i <= n; j++){
@@ -65,7 +70,7 @@ signed main(){
     }
     int ans = 0;
     REP(i,m){
-        RollingHash rhc(c[i]);
+        RollingHash rhc(c[i], B_1, B_2, MOD_1, MOD_2);
         ans += mp[c[i].size()][rhc.get(0, c[i].size())];
     }
     cout << ans << endl;

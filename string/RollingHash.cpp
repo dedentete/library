@@ -1,5 +1,11 @@
 /*
-    基数として乱数をとりたい場合、コメントアウトをはずす
+    基数として乱数をとりたい場合 : 
+    ll MOD_1 = 1000000007, MOD_2 = 1000000009;
+    random_device rnd;
+    mt19937 mt(rnd());
+    B_1 = mt() % (MOD_1 - 2) + 2;
+    B_2 = mt() % (MOD_2 - 2) + 2;
+    RolligHash rh(s, B_1, B_2, MOD_1, MOD_2);
 */
 struct RollingHash{
     using T = long long;
@@ -10,12 +16,6 @@ struct RollingHash{
     RollingHash(string & s, T B_1 = 1007, T B_2 = 1009, T MOD_1 = 1000000007, T MOD_2 = 1000000009)
      : B_1(B_1), B_2(B_2), MOD_1(MOD_1), MOD_2(MOD_2) {
         int n = s.size();
-        /*
-        random_device rnd;
-        mt19937 mt(rnd());
-        B_1 = mt() % (MOD_1 - 2) + 2;
-        B_2 = mt() % (MOD_2 - 2) + 2;
-        */    
         hash_1.assign(n + 1, 0);
         hash_2.assign(n + 1, 0);
         pow_1.assign(n + 1, 1);
