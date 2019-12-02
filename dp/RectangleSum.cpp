@@ -24,7 +24,7 @@ struct RectangleSum{
         }
     }
 
-    T getsum(int top, int left, int bottom, int right){//[top, bottom], [left, right]
-        return sum[bottom + 1][right + 1] - sum[bottom + 1][left] - sum[top][right + 1] + sum[top][left];
+    T getsum(int top, int left, int bottom, int right){//[top, bottom), [left, right)
+        return sum[bottom][right] - sum[bottom][left] - sum[top][right] + sum[top][left];
     }
 };

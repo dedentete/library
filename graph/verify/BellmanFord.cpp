@@ -44,7 +44,7 @@ vector<T> BellmanFord(int V, int s, vector<edge<T>> & es, const T INF = 1e9){
 
 //グラフ全体をみて、負の閉路が存在するとき true を返す
 template <typename T>
-bool Find_Negative_Loop(int V, vector<edge<T>> & es){
+bool FindNegativeLoop(int V, vector<edge<T>> & es){
     vector<T> dist(V, 0);
     for(int i = 0; i < V; i++){
         for(edge<T> & e : es){

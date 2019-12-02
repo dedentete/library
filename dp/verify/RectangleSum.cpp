@@ -1,4 +1,4 @@
-//ARC-25-B
+//GigaCode2019-D
 #include <bits/stdc++.h>
 using namespace std;
 #define REP(i,a) for(int i = 0; i < (a); i++)
@@ -6,7 +6,8 @@ using namespace std;
 typedef long long ll;
 typedef pair<int, int> P;
 const int INF = 1e9;
-const int MOD = 1e9 + 7;
+const long long LINF = 1e18;
+const long long MOD = 1e9 + 7;
 
 template <typename T>
 struct RectangleSum{
@@ -34,35 +35,31 @@ struct RectangleSum{
         }
     }
 
-    T getsum(int top, int left, int bottom, int right){//[top, bottom], [left, right]
-        return sum[bottom + 1][right + 1] - sum[bottom + 1][left] - sum[top][right + 1] + sum[top][left];
+    T getsum(int top, int left, int bottom, int right){//[top, bottom), [left, right)
+        return sum[bottom][right] - sum[bottom][left] - sum[top][right] + sum[top][left];
     }
 };
 
 signed main(){
     int h,w;
-    cin >> h >> w;
-    int c;
-    RectangleSum<int> black(h, w), white(h, w);
+    ll K,v;
+    cin >> h >> w >> K >> v;
+    RectangleSum<ll> rs(h,w);
+    ll a;
     REP(i,h){
         REP(j,w){
-            cin >> c;
-            if((i + j) % 2 == 0){
-                black.add(i, j, c);
-            }else{
-                white.add(i, j, c);
-            }
+            cin >> a;
+            rs.add(i, j, a);
         }
     }
-    black.build();
-    white.build();
+    rs.build();
     int ans = 0;
     REP(i,h){
         REP(j,w){
-            for(int k = i; k < h; k++){
-                for(int l = j; l < w; l++){
-                    if(black.getsum(i, j, k, l) == white.getsum(i, j, k, l)){
-                        ans = max(ans, (k - i + 1) * (l - j + 1));
+            for(int k = i + 1; k <= h; k++){
+                for(int l = j + 1; l <= w; l++){
+                    if(rs.getsum(i, j, k, l) + (k - i) * (l - j) * K <= v){
+                        ans = max(ans, (k - i) * (l - j));
                     }
                 }
             }
