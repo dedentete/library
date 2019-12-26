@@ -11,7 +11,7 @@ struct Matrix{
     mat A;
 
     Matrix() {}
-    Matrix(int h, int w, T x = T(0)) : A(h, vector<T>(w, x) {}
+    Matrix(int h, int w, T x = T(0)) : A(h, vector<T>(w, x)) {}
     Matrix(mat A) : A(A) {}
 
     int size() const { return A.size(); }
@@ -51,7 +51,7 @@ struct Matrix{
                 }
             }
         }
-        A.swap(C);
+        this->A = C.A;
         return *this;
     }
 
