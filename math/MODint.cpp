@@ -36,15 +36,18 @@ struct Mint{
         if(x >= MOD) x -= MOD;
         return *this;
     }
+    
     Mint & operator -= (Mint a){
         x += MOD - a.x;
         if(x >= MOD) x -= MOD;
         return *this;
     }
+
     Mint & operator *= (Mint a){
         x = 1LL * x * a.x % MOD;
         return *this;
     }
+
     Mint & operator /= (Mint a){
         return (*this) *= a.inv();
     }

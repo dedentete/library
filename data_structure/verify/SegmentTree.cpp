@@ -26,11 +26,11 @@ struct SegmentTree{
     SegmentTree(F f, Monoid def) : f(f), def(def) {}
 
     void build(const vector<Monoid> & vec){
-        int siz = vec.size();
+        int sz = vec.size();
         n = 1;
-        while(n < siz) n *= 2;
+        while(n < sz) n *= 2;
         dat.assign(2 * n - 1, def);
-        for(int i = 0; i < siz; i++) dat[n - 1 + i] = vec[i];
+        for(int i = 0; i < sz; i++) dat[n - 1 + i] = vec[i];
         for(int i = n - 2; i >= 0; i--) dat[i] = f(dat[2 * i + 1], dat[2 * i + 2]);
     }
 
