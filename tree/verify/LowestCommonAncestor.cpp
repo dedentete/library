@@ -1,4 +1,4 @@
-//PAST201912-K
+//ABC-14-D
 #include <bits/stdc++.h>
 using namespace std;
 #define REP(i,a) for(int i = 0; i < (a); i++)
@@ -56,33 +56,32 @@ struct LCA{
         }
         return par[0][u];
     }
+
+    int dist(int u, int v){
+        return depth[u] + depth[v] - depth[query(u, v)] * 2;
+    }
 };
 
 signed main(){
     int n;
     cin >> n;
-    int par;
     LCA lca(n);
-    REP(i,n){
-        int p;
-        cin >> p;
-        if(p == -1){
-            par = i;
-            continue;
-        }
-        p--;
-        lca.add_edge(p, i);
+    REP(i,n - 1){
+        int x,y;
+        cin >> x >> y;
+        x--;
+        y--;
+        lca.add_edge(x, y);
     }
-    lca.build(par);
+    lca.build();
     int q;
     cin >> q;
-    REP(i,q){
+    while(q--){
         int a,b;
         cin >> a >> b;
         a--;
         b--;
-        if(lca.query(a, b) == b) cout << "Yes" << endl;
-        else cout << "No" << endl;
+        cout << lca.dist(a, b) + 1 << endl;
     }
     return 0;
 }

@@ -1289,6 +1289,29 @@
         ],
         "description": "compress"
     },
+    "RunLengthEncoding":{
+        "prefix": "RunLengthEncoding",
+        "body": [
+            "template <typename T>",
+            "vector<pair<int, T>> RLE(vector<T> v){",
+            "    int n = v.size();",
+            "    vector<pair<int, T>> res;",
+            "    T pre = v[0];",
+            "    int cnt = 1;",
+            "    for(int i = 1; i < n; i++){",
+            "        if(v[i] != pre){",
+            "            res.emplace_back(cnt, pre);",
+            "            pre = v[i];",
+            "            cnt = 0;",
+            "        }",
+            "        cnt++;",
+            "    }",
+            "    res.emplace_back(cnt, pre);",
+            "    return res;",
+            "}"
+        ],
+        "description": "RunLengthEncoding"
+    },
     "RollingHash":{
         "prefix": "RollingHash",
         "body": [
@@ -1489,7 +1512,27 @@
             "                if(par[k][v] != -1) par[k + 1][v] = par[k][par[k][v]];",
             "            }",
             "        }",
-            "    }"
+            "    }",
+            "",
+            "    int query(int u, int v){",
+            "        if(depth[u] > depth[v]) swap(u, v);",
+            "        for(int k = 0; k < h; k++){",
+            "            if((depth[v] - depth[u]) >> k & 1) v = par[k][v];",
+            "        }",
+            "        if(u == v) return u;",
+            "        for(int k = h - 1; k >= 0; k--){",
+            "            if(par[k][u] != par[k][v]){",
+            "                u = par[k][u];",
+            "                v = par[k][v];",
+            "            }",
+            "        }",
+            "        return par[0][u];",
+            "    }",
+            "",
+            "    int dist(int u, int v){",
+            "        return depth[u] + depth[v] - depth[query(u, v)] * 2;",
+            "    }",
+            "};"
         ],
         "description": "LowestCommonAncestor"
     }
