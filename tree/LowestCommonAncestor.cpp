@@ -16,7 +16,7 @@ struct LCA{
 
     void dfs(int v, int p, int d){
         par[0][v] = p;
-        dep[v] = d;
+        depth[v] = d;
         for(int u : G[v]){
             if(u != p) dfs(u, v, d + 1);
         }
@@ -30,19 +30,3 @@ struct LCA{
             }
         }
     }
-
-    int query(int u, int v){
-        if(depth[u] > depth[v]) swap(u, v);
-        for(int k = 0; k < h; k++){
-            if((depth[v] - depth[u]) >> k & 1) v = par[k][v];
-        }
-        if(u == v) return u;
-        for(int k = h - 1; k >= 0; k--){
-            if(par[k][u] != par[k][v]){
-                u = par[k][u];
-                v = par[k][v];
-            }
-        }
-        return par[0][u];
-    }
-}
