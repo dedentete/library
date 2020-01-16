@@ -13,17 +13,8 @@ struct UnionFind{
     vector<int> par;
     vector<int> siz;
 
-    UnionFind(int n){
-        init(n);
-    }
-    
-    void init(int n){
-        par.resize(n);
-        siz.resize(n);
-        for(int i = 0; i < n; i++){
-            par[i] = i;
-            siz[i] = 1;
-        }
+    UnionFind(int n) : par(n), siz(n, 1){
+        iota(par.begin(), par.end(), 0);
     }
 
     int root(int x){
