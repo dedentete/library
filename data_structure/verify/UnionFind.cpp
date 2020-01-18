@@ -9,8 +9,7 @@ const int INF = 1e9;
 const int MOD = 1e9 + 7;
 
 struct UnionFind{
-    vector<int> par;
-    vector<int> siz;
+    vector<int> par,siz;
 
     UnionFind(int n) : par(n), siz(n, 1){
         iota(par.begin(), par.end(), 0);
