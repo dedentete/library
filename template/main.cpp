@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define REP(i,a) for(int i = 0; i < (a); i++)
-#define ALL(a) (a).begin(),(a).end()
-typedef long long ll;
-typedef pair<int, int> P;
+#define rep(i,n) for(int i = 0; i < (n); i++)
+#define ALL(v) (v).begin(),(v).end()
+using ll = long long;
+using P = pair<int, int>;
 const int INF = 1e9;
 const long long LINF = 1e18;
 const long long MOD = 1e9 + 7;
