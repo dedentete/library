@@ -17,7 +17,7 @@ vector<T> Dijkstra(int s, vector<vector<pair<int, T>>> & G, /*vector<int> & prev
     priority_queue<P, vector<P>, greater<P>> que;
     dist[s] = 0;
     que.emplace(0, s);
-    /*prev.assign(V, -1);*/
+    //prev.assign(V, -1);
     while(!que.empty()){
         P p = que.top();
         que.pop();
@@ -28,7 +28,7 @@ vector<T> Dijkstra(int s, vector<vector<pair<int, T>>> & G, /*vector<int> & prev
             T cost = G[v][i].second;
             if(dist[to] > dist[v] + cost){
                 dist[to] = dist[v] + cost;
-                /*prev[to] = v;*/
+                //prev[to] = v;
                 que.emplace(dist[to], to);
             }
         }
