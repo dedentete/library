@@ -95,3 +95,17 @@ struct Partition{
         return dp[n][k];
     }
 };
+
+/*
+    MODint依存
+    計算量 : O(k)
+*/
+template <typename T>
+T C(long long n, int k){
+    T num(1), denom(1);
+    for(int i = 0; i < k; i++){
+        num *= T(n - i);
+        denom *= T(i + 1);
+    }
+    return num / denom;
+}

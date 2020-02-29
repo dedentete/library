@@ -47,15 +47,18 @@ struct Mint{
         if(x >= MOD) x -= MOD;
         return *this;
     }
+    
     Mint & operator -= (Mint a){
         x += MOD - a.x;
         if(x >= MOD) x -= MOD;
         return *this;
     }
+
     Mint & operator *= (Mint a){
         x = 1LL * x * a.x % MOD;
         return *this;
     }
+
     Mint & operator /= (Mint a){
         return (*this) *= a.inv();
     }
@@ -180,6 +183,20 @@ struct Partition{
         return dp[n][k];
     }
 };
+
+/*
+    MODint依存
+    計算量 : O(k)
+*/
+template <typename T>
+T C(long long n, int k){
+    T num(1), denom(1);
+    for(int i = 0; i < k; i++){
+        num *= T(n - i);
+        denom *= T(i + 1);
+    }
+    return num / denom;
+}
 
 signed main(){
     ll x,y;

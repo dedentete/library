@@ -1,15 +1,14 @@
-using ll = long long;
-template <ll MOD = 1000000007>
+template <int MOD = 1000000007>
 struct Mint{
-    ll x;
+    int x;
 
     Mint() : x(0) {}
-    Mint(ll t){
+    Mint(int t){
         x = t % MOD;
         if(x < 0) x += MOD;
     }
     
-    Mint pow(ll n){
+    Mint pow(int n){
         Mint res(1), t(x);
         while(n > 0){
             if(n & 1) res *= t;
@@ -68,7 +67,7 @@ struct Mint{
     }
 
     friend istream & operator >> (istream & is, Mint &a){
-        ll t;
+        int t;
         is >> t;
         a = Mint<MOD>(t);
         return (is);
