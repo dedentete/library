@@ -30,7 +30,7 @@ struct Mint{
     }
 
     Mint inv() const {
-        ll a = x, b = MOD, u = 1, v = 0, t;
+        int a = x, b = MOD, u = 1, v = 0, t;
         while(b > 0){
             t = a / b;
             a -= t * b;
@@ -54,7 +54,7 @@ struct Mint{
     }
 
     Mint & operator *= (Mint a){
-        x = 1LL * x * a.x % MOD;
+        x = int(1LL * x * a.x % MOD);
         return *this;
     }
 
