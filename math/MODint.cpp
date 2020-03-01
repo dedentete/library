@@ -3,7 +3,7 @@ struct Mint{
     int x;
 
     Mint() : x(0) {}
-    Mint(int t){
+    Mint(long long t){
         x = t % MOD;
         if(x < 0) x += MOD;
     }
