@@ -1773,6 +1773,27 @@
         ],
         "description": "Zalgorithm"
     },
+    "co":{
+        "prefix": "co",
+        "body": [
+            "cout << $1 << endl;"
+        ],
+        "description": "co"
+    },
+    "eb":{
+        "prefix": "eb",
+        "body": [
+            "emplace_back($1)"
+        ],
+        "description": "eb"
+    },
+    "fi":{
+        "prefix": "fi",
+        "body": [
+            "first"
+        ],
+        "description": "fi"
+    },
     "main":{
         "prefix": "main",
         "body": [
@@ -1793,14 +1814,28 @@
         ],
         "description": "main"
     },
-    "rep":{
-        "prefix": "rep",
+    "pb":{
+        "prefix": "pb",
+        "body": [
+            "push_back($1)"
+        ],
+        "description": "pb"
+    },
+    "REP":{
+        "prefix": "REP",
         "body": [
             "rep($1,$2){",
             "    $3",
             "}"
         ],
-        "description": "rep"
+        "description": "REP"
+    },
+    "se":{
+        "prefix": "se",
+        "body": [
+            "second"
+        ],
+        "description": "se"
     },
     "LowestCommonAncestor":{
         "prefix": "LowestCommonAncestor",
