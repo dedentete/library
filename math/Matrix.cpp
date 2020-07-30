@@ -36,10 +36,10 @@ struct Matrix {
     }
 
     Matrix& operator-=(const Matrix& B) {
-        assert(A.size() == B.size());
+        assert((int)A.size() == (int)B.size());
         assert(A[0].size() == B[0].size());
-        for (int i = 0; i < A.size(); i++) {
-            for (int j = 0; j < A[0].size(); j++) {
+        for (int i = 0; i < (int)A.size(); i++) {
+            for (int j = 0; j < (int)A[0].size(); j++) {
                 A[i][j] -= B[i][j];
             }
         }
@@ -47,12 +47,12 @@ struct Matrix {
     }
 
     Matrix& operator*=(const Matrix& B) {
-        assert(A[0].size() == B.size());
+        assert((int)A[0].size() == (int)B.size());
         int h = A.size(), w = B[0].size();
         Matrix C(h, w);
         for (int i = 0; i < h; i++) {
             for (int j = 0; j < w; j++) {
-                for (int k = 0; k < B.size(); k++) {
+                for (int k = 0; k < (int)B.size(); k++) {
                     C[i][j] += A[i][k] * B[k][j];
                 }
             }

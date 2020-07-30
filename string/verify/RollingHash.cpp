@@ -9,15 +9,6 @@ const int INF = 1e9;
 const long long LINF = 1e18;
 const long long MOD = 1e9 + 7;
 
-/*
-    基数として乱数をとりたい場合 :
-    ll B_1, B_2, MOD_1 = 1000000007, MOD_2 = 1000000009;
-    random_device rnd;
-    mt19937 mt(rnd());
-    B_1 = mt() % (MOD_1 - 2) + 2;
-    B_2 = mt() % (MOD_2 - 2) + 2;
-    RollingHash<char> rh(s, B_1, B_2, MOD_1, MOD_2);
-*/
 template <typename T>
 struct RollingHash {
     using ll = long long;
@@ -57,7 +48,7 @@ struct RollingHash {
             ((hash_1[r] - hash_1[l] * pow_1[r - l]) % MOD_1 + MOD_1) % MOD_1;
         ll res_2 =
             ((hash_2[r] - hash_2[l] * pow_2[r - l]) % MOD_2 + MOD_2) % MOD_2;
-        return P(res_1, res_2);
+        return pair<ll, ll>(res_1, res_2);
     }
 };
 

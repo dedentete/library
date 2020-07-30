@@ -1,5 +1,5 @@
-int tt;
-cin >> tt;
-while(tt--){
+int number_of_testcases;
+cin >> number_of_testcases;
+while (number_of_testcases--) {
     $1
 }
