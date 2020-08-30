@@ -1,77 +1,118 @@
-// AOJ-DSL-2-A
+// joisc2011-bookshelf
 #include <bits/stdc++.h>
 using namespace std;
-#define REP(i, a) for (int i = 0; i < (a); i++)
-#define ALL(a) (a).begin(), (a).end()
-typedef long long ll;
-typedef pair<int, int> P;
-const int INF = 1e9;
-const long long LINF = 1e18;
-const long long MOD = 1e9 + 7;
+#define rep(i, n) for (int i = 0; i < (n); i++)
+#define ALL(v) (v).begin(), (v).end()
+using ll = long long;
+constexpr int INF = 1e9;
+constexpr long long LINF = 1e18;
+constexpr long long MOD = 1e9 + 7;
 
-/*
-    SegmentTree<int> seg(f, def) のように宣言する
-    RMQ の場合 :
-    auto f = [](int a, int b){return min(a, b);};
-    int def = INF;
-*/
-template <typename Monoid>
+template <typename Operator>
 struct SegmentTree {
-    using F = function<Monoid(Monoid, Monoid)>;
+    using NodeType = typename Operator::NodeType;
     int n;
-    vector<Monoid> dat;
-    F f;
-    Monoid def;
+    int length;
+    vector<NodeType> node;
 
-    SegmentTree(F f, Monoid def) : f(f), def(def) {}
-
-    void build(const vector<Monoid>& vec) {
-        int sz = vec.size();
-        n = 1;
-        while (n < sz) n *= 2;
-        dat.assign(2 * n - 1, def);
-        for (int i = 0; i < sz; i++) dat[n - 1 + i] = vec[i];
-        for (int i = n - 2; i >= 0; i--)
-            dat[i] = f(dat[2 * i + 1], dat[2 * i + 2]);
+    SegmentTree(const int n) : n(n) {
+        length = 1;
+        while (length < n) length *= 2;
+        node.resize(2 * length, Operator::unitnode);
+        for (int i = length - 1; i >= 0; i--)
+            node[i] =
+                Operator::funcNode(node[(i << 1) + 0], node[(i << 1) + 1]);
     }
 
-    void update(int k, Monoid x) {
-        k += (n - 1);
-        dat[k] = x;
-        while (k > 0) {
-            k = (k - 1) / 2;
-            dat[k] = f(dat[2 * k + 1], dat[2 * k + 2]);
+    SegmentTree(const int n, const NodeType init) : n(n) {
+        length = 1;
+        while (length < n) length *= 2;
+        node.resize(2 * length, Operator::unitnode);
+        for (int i = 0; i < n; i++) node[i + length] = init;
+        for (int i = length - 1; i >= 0; i--)
+            node[i] =
+                Operator::funcNode(node[(i << 1) + 0], node[(i << 1) + 1]);
+    }
+
+    SegmentTree(const vector<NodeType>& vec) : n(vec.size()) {
+        length = 1;
+        while (length < n) length *= 2;
+        node.resize(2 * length, Operator::unitnode);
+        for (int i = 0; i < vec.size(); i++) node[i + length] = vec[i];
+        for (int i = length - 1; i >= 0; i--)
+            node[i] =
+                Operator::funcNode(node[(i << 1) + 0], node[(i << 1) + 1]);
+    }
+
+    void update(int idx, const NodeType x) {
+        if (idx < 0 || length <= idx) return;
+        idx += length;
+        node[idx] = Operator::funcMerge(node[idx], x);
+        while (idx >>= 1)
+            node[idx] =
+                Operator::funcNode(node[(idx << 1) + 0], node[(idx << 1) + 1]);
+    }
+
+    NodeType get(int l, int r) {
+        if (l < 0 || length <= l || r < 0 || length < r)
+            return Operator::unitnode;
+        NodeType vl = Operator::unitnode, vr = Operator::unitnode;
+        for (l += length, r += length; l < r; l >>= 1, r >>= 1) {
+            if (l & 1) vl = Operator::funcNode(vl, node[l++]);
+            if (r & 1) vr = Operator::funcNode(node[--r], vr);
         }
+        return Operator::funcNode(vl, vr);
     }
 
-    Monoid query(int a, int b) {
-        return query(a, b, 0, 0, n);
+    void print() {
+        for (int i = 0; i < n; i++) cout << get(i, i + 1) << " ";
+        cout << endl;
     }
+};
 
-   private:
-    Monoid query(int a, int b, int k, int l, int r) {
-        if (r <= a || b <= l) return def;
-        if (a <= l && r <= b) return dat[k];
-        Monoid vl = query(a, b, 2 * k + 1, l, (l + r) / 2);
-        Monoid vr = query(a, b, 2 * k + 2, (l + r) / 2, r);
-        return f(vl, vr);
+template <typename T>
+struct RangeMinPointUpdate {
+    using NodeType = T;
+    static constexpr NodeType unitnode = 1e9;
+    static constexpr NodeType funcNode(NodeType l, NodeType r) {
+        return min(l, r);
+    }
+    static constexpr NodeType funcMerge(NodeType l, NodeType r) {
+        return r;
+    }
+};
+
+template <typename T>
+struct RangeMaxPointUpdate {
+    using NodeType = T;
+    static constexpr NodeType unitnode = -1e9;
+    static constexpr NodeType funcNode(NodeType l, NodeType r) {
+        return max(l, r);
+    }
+    static constexpr NodeType funcMerge(NodeType l, NodeType r) {
+        return r;
     }
 };
 
 signed main() {
-    int n, q;
-    cin >> n >> q;
-    auto f = [](int a, int b) { return min(a, b); };
-    SegmentTree<int> seg(f, INT_MAX);
-    seg.build(vector<int>(n, INT_MAX));
-    int c, x, y;
-    REP(i, q) {
-        cin >> c >> x >> y;
-        if (c == 0) {
-            seg.update(x, y);
-        } else {
-            cout << seg.query(x, y + 1) << endl;
-        }
+    int n;
+    cin >> n;
+    ll sum = 0;
+    ll a[n];
+    rep(i, n) {
+        cin >> a[i];
+        sum += a[i];
     }
+    int pos[n];
+    rep(i, n) {
+        cin >> pos[i];
+        pos[i]--;
+    }
+    SegmentTree<RangeMaxPointUpdate<ll>> dp(n + 1);
+    dp.update(0, 0);
+    for (int i = 0; i < n; i++) {
+        dp.update(pos[i] + 1, dp.get(0, pos[i] + 1) + a[pos[i]]);
+    }
+    cout << 2 * (sum - dp.get(0, n + 1)) << endl;
     return 0;
 }

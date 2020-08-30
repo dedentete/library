@@ -1,13 +1,12 @@
-// GigaCode2019-D
+// ABC86-D
 #include <bits/stdc++.h>
 using namespace std;
-#define REP(i, a) for (int i = 0; i < (a); i++)
-#define ALL(a) (a).begin(), (a).end()
-typedef long long ll;
-typedef pair<int, int> P;
-const int INF = 1e9;
-const long long LINF = 1e18;
-const long long MOD = 1e9 + 7;
+#define rep(i, n) for (int i = 0; i < (n); i++)
+#define ALL(v) (v).begin(), (v).end()
+using ll = long long;
+constexpr int INF = 1e9;
+constexpr long long LINF = 1e18;
+constexpr long long MOD = 1e9 + 7;
 
 template <typename T>
 struct RectangleSum {
@@ -28,43 +27,61 @@ struct RectangleSum {
     }
 
     void build() {
-        for (int i = 1; i < sum.size(); i++) {
-            for (int j = 1; j < sum[i].size(); j++) {
+        for (int i = 1; i < (int)sum.size(); i++) {
+            for (int j = 1; j < (int)sum[i].size(); j++) {
                 sum[i][j] += sum[i][j - 1] + sum[i - 1][j] - sum[i - 1][j - 1];
             }
         }
     }
 
-    T getsum(int top, int left, int bottom,
-             int right) {  //[top, bottom), [left, right)
+    T get(int top, int left, int bottom,
+          int right) {  //[top, bottom), [left, right)
         return sum[bottom][right] - sum[bottom][left] - sum[top][right] +
                sum[top][left];
+    }
+
+    void print() {
+        for (int y = 0; y < (int)sum.size() - 1; y++) {
+            for (int x = 0; x < (int)sum[y].size() - 1; x++) {
+                cout << get(y, x, y + 1, x + 1) << " ";
+            }
+            cout << endl;
+        }
     }
 };
 
 signed main() {
-    int h, w;
-    ll K, v;
-    cin >> h >> w >> K >> v;
-    RectangleSum<ll> rs(h, w);
-    ll a;
-    REP(i, h) {
-        REP(j, w) {
-            cin >> a;
-            rs.add(i, j, a);
-        }
+    int n, k;
+    cin >> n >> k;
+    RectangleSum<int> rsb(2 * k, 2 * k);
+    RectangleSum<int> rsw(2 * k, 2 * k);
+    int cntb = 0, cntw = 0;
+    int x, y;
+    char c;
+    rep(i, n) {
+        cin >> x >> y >> c;
+        x %= 2 * k;
+        y %= 2 * k;
+        rsb.add(y, x, c == 'B' ? 1 : -1);
+        rsw.add(y, x, c == 'W' ? 1 : -1);
+        cntb += c == 'B';
+        cntw += c == 'W';
     }
-    rs.build();
-    int ans = 0;
-    REP(i, h) {
-        REP(j, w) {
-            for (int k = i + 1; k <= h; k++) {
-                for (int l = j + 1; l <= w; l++) {
-                    if (rs.getsum(i, j, k, l) + (k - i) * (l - j) * K <= v) {
-                        ans = max(ans, (k - i) * (l - j));
-                    }
-                }
-            }
+    rsb.build();
+    rsw.build();
+    int ans = -INF;
+    for (int y = 0; y < k; y++) {
+        for (int x = 0; x < k; x++) {
+            ans = max(ans, cntw + rsb.get(0, 0, y, x) +
+                               rsb.get(y, x, y + k, x + k) +
+                               rsb.get(y + k, x + k, 2 * k, 2 * k) +
+                               rsb.get(y + k, 0, 2 * k, x) +
+                               rsb.get(0, x + k, y, 2 * k));
+            ans = max(ans, cntb + rsw.get(0, 0, y, x) +
+                               rsw.get(y, x, y + k, x + k) +
+                               rsw.get(y + k, x + k, 2 * k, 2 * k) +
+                               rsw.get(y + k, 0, 2 * k, x) +
+                               rsw.get(0, x + k, y, 2 * k));
         }
     }
     cout << ans << endl;

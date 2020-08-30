@@ -17,16 +17,25 @@ struct RectangleSum {
     }
 
     void build() {
-        for (int i = 1; i < sum.size(); i++) {
-            for (int j = 1; j < sum[i].size(); j++) {
+        for (int i = 1; i < (int)sum.size(); i++) {
+            for (int j = 1; j < (int)sum[i].size(); j++) {
                 sum[i][j] += sum[i][j - 1] + sum[i - 1][j] - sum[i - 1][j - 1];
             }
         }
     }
 
-    T getsum(int top, int left, int bottom,
-             int right) {  //[top, bottom), [left, right)
+    T get(int top, int left, int bottom,
+          int right) {  //[top, bottom), [left, right)
         return sum[bottom][right] - sum[bottom][left] - sum[top][right] +
                sum[top][left];
+    }
+
+    void print() {
+        for (int y = 0; y < (int)sum.size() - 1; y++) {
+            for (int x = 0; x < (int)sum[y].size() - 1; x++) {
+                cout << get(y, x, y + 1, x + 1) << " ";
+            }
+            cout << endl;
+        }
     }
 };

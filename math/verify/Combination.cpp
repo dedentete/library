@@ -1,26 +1,24 @@
-// ABC145-D
+// ABC-21-D
 #include <bits/stdc++.h>
 using namespace std;
-#define REP(i, a) for (int i = 0; i < (a); i++)
-#define ALL(a) (a).begin(), (a).end()
-typedef long long ll;
-typedef pair<int, int> P;
-const int INF = 1e9;
-const long long LINF = 1e18;
-const long long MOD = 1e9 + 7;
-
+#define rep(i, n) for (int i = 0; i < (n); i++)
+#define ALL(v) (v).begin(), (v).end()
 using ll = long long;
-template <ll MOD = 1000000007>
+constexpr int INF = 1e9;
+constexpr long long LINF = 1e18;
+constexpr long long MOD = 1e9 + 7;
+
+template <int MOD = 1000000007>
 struct Mint {
-    ll x;
+    int x;
 
     Mint() : x(0) {}
-    Mint(ll t) {
+    Mint(long long t) {
         x = t % MOD;
         if (x < 0) x += MOD;
     }
 
-    Mint pow(ll n) {
+    Mint pow(int n) {
         Mint res(1), t(x);
         while (n > 0) {
             if (n & 1) res *= t;
@@ -31,7 +29,7 @@ struct Mint {
     }
 
     Mint inv() const {
-        ll a = x, b = MOD, u = 1, v = 0, t;
+        int a = x, b = MOD, u = 1, v = 0, t;
         while (b > 0) {
             t = a / b;
             a -= t * b;
@@ -55,7 +53,7 @@ struct Mint {
     }
 
     Mint &operator*=(Mint a) {
-        x = 1LL * x * a.x % MOD;
+        x = int(1LL * x * a.x % MOD);
         return *this;
     }
 
@@ -95,16 +93,14 @@ struct Mint {
     }
 
     friend istream &operator>>(istream &is, Mint &a) {
-        ll t;
+        int t;
         is >> t;
         a = Mint<MOD>(t);
         return (is);
     }
 };
 
-/*
-    MODint依存
-*/
+// MODint依存
 template <typename T>
 struct Comb {
     vector<T> fac, fin;
@@ -120,7 +116,7 @@ struct Comb {
         }
     }
 
-    /* 階乗 */
+    // 階乗
     inline T fact(int k) const {
         return fac[k];
     }
@@ -129,25 +125,25 @@ struct Comb {
         return fin[k];
     }
 
-    /* 順列 */
+    // 順列
     T P(int n, int k) const {
         if (k < 0 || n < k) return T(0);
         return fac[n] * fin[n - k];
     }
 
-    /* 組み合わせ */
+    // 組み合わせ
     T C(int n, int k) const {
         if (k < 0 || n < k) return T(0);
         return fac[n] * fin[n - k] * fin[k];
     }
 
-    /* 重複組み合わせ */
+    // 重複組み合わせ
     T H(int n, int k) const {
         if (n < 0 || k < 0) return T(0);
         return k == 0 ? T(1) : C(n + k - 1, k);
     }
 
-    /* ベル数 */
+    // ベル数
     T B(int n, int k) const {
         if (n == 0) return T(1);
         k = min(k, n);
@@ -161,17 +157,17 @@ struct Comb {
         }
         T res(0);
         for (int i = 1; i <= k; i++) {
-            /* MODint依存 */
+            // MODint依存
             res += T(i).pow(n) * fin[i] * dp[k - i];
         }
         return res;
     }
 
-    /* スターリング数 */
+    // スターリング数
     T S(int n, int k) const {
         T res(0);
         for (int i = 1; i <= k; i++) {
-            /* MODint依存 */
+            // MODint依存
             T t = C(k, i) * T(i).pow(n);
             if ((k - i) & 1)
                 res -= t;
@@ -203,7 +199,7 @@ struct Partition {
         }
     }
 
-    /* 分割数 */
+    //分割数
     T P(int n, int k) {
         if (n < 0 || k < 0) return T(0);
         return dp[n][k];
@@ -225,16 +221,9 @@ T C(long long n, int k) {
 }
 
 signed main() {
-    ll x, y;
-    cin >> x >> y;
-    ll sum = x + y;
-    if (sum % 3 == 0 && sum / 3 <= x && x <= sum / 3 * 2 && sum / 3 <= y &&
-        y <= sum / 3 * 2) {
-        ll mn = min(x, y);
-        Comb<Mint<MOD>> C(1e6);
-        cout << C.C(sum / 3, mn - sum / 3) << endl;
-    } else {
-        cout << 0 << endl;
-    }
+    int n, k;
+    cin >> n >> k;
+    Comb<Mint<>> C(n + k);
+    cout << C.H(n, k) << endl;
     return 0;
 }

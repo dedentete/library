@@ -1,6 +1,4 @@
-/*
-    MODint依存
-*/
+// MODint依存
 template <typename T>
 struct Comb {
     vector<T> fac, fin;
@@ -16,7 +14,7 @@ struct Comb {
         }
     }
 
-    /* 階乗 */
+    // 階乗
     inline T fact(int k) const {
         return fac[k];
     }
@@ -25,25 +23,25 @@ struct Comb {
         return fin[k];
     }
 
-    /* 順列 */
+    // 順列
     T P(int n, int k) const {
         if (k < 0 || n < k) return T(0);
         return fac[n] * fin[n - k];
     }
 
-    /* 組み合わせ */
+    // 組み合わせ
     T C(int n, int k) const {
         if (k < 0 || n < k) return T(0);
         return fac[n] * fin[n - k] * fin[k];
     }
 
-    /* 重複組み合わせ */
+    // 重複組み合わせ
     T H(int n, int k) const {
         if (n < 0 || k < 0) return T(0);
         return k == 0 ? T(1) : C(n + k - 1, k);
     }
 
-    /* ベル数 */
+    // ベル数
     T B(int n, int k) const {
         if (n == 0) return T(1);
         k = min(k, n);
@@ -57,17 +55,17 @@ struct Comb {
         }
         T res(0);
         for (int i = 1; i <= k; i++) {
-            /* MODint依存 */
+            // MODint依存
             res += T(i).pow(n) * fin[i] * dp[k - i];
         }
         return res;
     }
 
-    /* スターリング数 */
+    // スターリング数
     T S(int n, int k) const {
         T res(0);
         for (int i = 1; i <= k; i++) {
-            /* MODint依存 */
+            // MODint依存
             T t = C(k, i) * T(i).pow(n);
             if ((k - i) & 1)
                 res -= t;
@@ -99,7 +97,7 @@ struct Partition {
         }
     }
 
-    /* 分割数 */
+    //分割数
     T P(int n, int k) {
         if (n < 0 || k < 0) return T(0);
         return dp[n][k];

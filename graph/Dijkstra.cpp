@@ -13,7 +13,7 @@ vector<T> Dijkstra(int s, vector<vector<pair<int, T>>>& G,
         que.pop();
         int v = p.second;
         if (dist[v] < p.first) continue;
-        for (int i = 0; i < G[v].size(); i++) {
+        for (int i = 0; i < (int)G[v].size(); i++) {
             int to = G[v][i].first;
             T cost = G[v][i].second;
             if (dist[to] > dist[v] + cost) {
