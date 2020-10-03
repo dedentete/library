@@ -1,3 +1,7 @@
+/*
+    二部グラフの最大マッチングを求める
+    O(VE)
+*/
 struct BiMatch {
     int V, time;
     vector<vector<int>> G;

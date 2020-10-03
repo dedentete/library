@@ -13,11 +13,9 @@ template <int MOD = 1000000007>
 struct Mint {
     int x;
 
-    Mint() : x(0) {}
-    Mint(long long t) {
-        x = t % MOD;
-        if (x < 0) x += MOD;
-    }
+    constexpr Mint() : x(0) {}
+    constexpr Mint(long long t)
+        : x(t >= 0 ? (t % MOD) : (MOD - (-t) % MOD) % MOD) {}
 
     Mint pow(int n) {
         Mint res(1), t(x);

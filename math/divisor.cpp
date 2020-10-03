@@ -1,4 +1,4 @@
-vector<long long> divisor(long long n) {
+vector<long long> Divisor(long long n) {
     vector<long long> res;
     for (int i = 1; (long long)i * i <= n; i++) {
         if (n % i == 0) {

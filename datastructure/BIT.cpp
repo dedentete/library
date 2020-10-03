@@ -1,6 +1,3 @@
-/*
-    1-indexed であることに注意 !!
-*/
 template <typename T>
 struct BIT {
     int n;
@@ -8,34 +5,36 @@ struct BIT {
 
     BIT(int n) : n(n), dat(n + 1, 0) {}
 
-    T sum(int a) {
-        T res = 0;
-        for (int i = a; i > 0; i -= (i & (-i))) res += dat[i];
+    T sum(int idx) {  // 1-indexed
+        T res(0);
+        for (int i = idx; i > 0; i -= i & -i) res += dat[i];
         return res;
     }
 
-    T sum(int a, int b) {
-        return sum(b - 1) - sum(a - 1);
+    T sum(int l, int r) {  // 0-indexed
+        return sum(r) - sum(l);
     }
 
-    void add(int k, T x) {
-        if (k == 0) return;
-        for (int i = k; i <= n; i += (i & (-i))) dat[i] += x;
+    void add(int idx, T x) {  // 0-indexed
+        idx++;
+        for (int i = idx; i <= n; i += i & -i) dat[i] += x;
     }
 
-    /*
-        a[0] + a[1] + ... + a[res] >= x
-    */
     int lower_bound(T x) {
         if (x <= 0) return T(0);
-        int res = 0, k = 1;
-        while (k < n) k <<= 1;
-        for (; k > 0; k >>= 1) {
-            if (res + k <= n && dat[res + k] < x) {
-                x -= dat[res + k];
-                res += k;
+        int res = 0, r = 1;
+        while (r < n) r <<= 1;
+        for (; r > 0; r >>= 1) {
+            if (res + r <= n && dat[res + r] < x) {
+                x -= dat[res + r];
+                res += r;
             }
         }
         return res + 1;
+    }
+
+    void print() {
+        for (int i = 0; i < n; i++) cout << sum(i, i + 1) << " ";
+        cout << endl;
     }
 };
