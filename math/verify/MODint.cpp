@@ -7,9 +7,14 @@ typedef long long ll;
 typedef pair<int, int> P;
 const int INF = 1e9;
 const long long LINF = 1e18;
-const long long MOD = 1e9 + 7;
+static int MOD = 1e9 + 7;
 
-template <int MOD = 1000000007>
+/*
+    実行時MODint : 
+    template <int& MOD = 1000000007>
+    static int MOD;
+*/
+template <int MOD = 1000000007> 
 struct Mint {
     int x;
 

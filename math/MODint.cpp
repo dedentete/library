@@ -1,3 +1,9 @@
+/*
+    実行時MODint :
+    template <int& MOD = 1000000007>
+    static int MOD;
+    cin >> MOD;
+*/
 template <int MOD = 1000000007>
 struct Mint {
     int x;
