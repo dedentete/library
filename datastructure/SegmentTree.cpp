@@ -1,6 +1,4 @@
-/*
-    https://beet-aizu.github.io/library/segtree/basic/ushi.cpp
-*/
+// https://beet-aizu.github.io/library/segtree/basic/ushi.cpp
 template <typename T>
 struct SegmentTree {
     using F = function<T(T, T)>;
@@ -9,7 +7,6 @@ struct SegmentTree {
     T ti;
     vector<T> dat;
 
-    SegmentTree() {}
     SegmentTree(F f, T ti) : f(f), ti(ti) {}
 
     void init(int n_) {
@@ -31,7 +28,7 @@ struct SegmentTree {
         while (k >>= 1) dat[k] = f(dat[(k << 1) | 0], dat[(k << 1) | 1]);
     }
 
-    T query(int a, int b) {
+    T get(int a, int b) {
         if (a >= b) return ti;
         T vl = ti, vr = ti;
         for (int l = a + n, r = b + n; l < r; l >>= 1, r >>= 1) {
@@ -49,7 +46,7 @@ struct SegmentTree {
         }
         int m = (l + r) >> 1;
         if (m <= st) return find(st, check, acc, (k << 1) | 1, m, r);
-        if (st <= l && !check(f(acc, dat[k]))) {
+        if (st <= l and !check(f(acc, dat[k]))) {
             acc = f(acc, dat[k]);
             return -1;
         }

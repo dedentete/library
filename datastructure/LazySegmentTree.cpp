@@ -1,5 +1,17 @@
 /*
     https://beet-aizu.github.io/library/segtree/basic/lazy.cpp
+    f : 要素と要素をマージする関数
+    g : 要素に作用素を作用させる関数
+    h : 作用素と作用素をマージする関数
+    ti : 要素の単位元
+    ei : 作用素の単位元
+
+    RMQ and RUQ ...
+    auto f = [](int a, int b) { return min(a, b); };
+    auto g = [](int a, int b) { return b; };
+    auto h = [](int a, int b) { return b; };
+    int ti = INT_MAX;
+    int ei = -1;
 */
 template <typename T, typename E>
 struct LazySegmentTree {
@@ -73,7 +85,7 @@ struct LazySegmentTree {
         recalc(a);
     }
 
-    T query(int a, int b) {
+    T get(int a, int b) {
         if (a >= b) return ti;
         thrust(a += n);
         thrust(b += n - 1);
@@ -94,7 +106,7 @@ struct LazySegmentTree {
         propagate(k);
         int m = (l + r) >> 1;
         if (m <= st) return find(st, check, acc, (k << 1) | 1, m, r);
-        if (st <= l && !check(f(acc, dat[k]))) {
+        if (st <= l and !check(f(acc, dat[k]))) {
             acc = f(acc, dat[k]);
             return -1;
         }

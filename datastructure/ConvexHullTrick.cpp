@@ -1,6 +1,4 @@
-/*
-    追加クエリの傾き a が単調の場合しか使えない (単調でない場合はLi Chao Treeを使う)
-*/
+// 追加クエリの傾き a が単調の場合しか使えない (単調でない場合は Li Chao Tree)
 template <typename T, bool isMin>
 struct CHT {
 #define F first
