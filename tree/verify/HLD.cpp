@@ -1,4 +1,4 @@
-// PAST202010-M
+// AOJ-GRL-5-D
 #include <bits/stdc++.h>
 using namespace std;
 #define rep(i, n) for (int i = 0; i < (int)(n); i++)
@@ -89,88 +89,79 @@ class HLD {
     }
 };
 
-// https://beet-aizu.github.io/library/segtree/basic/dual.cpp
-template <typename E>
-struct DualSegmentTree {
-    using H = function<E(E, E)>;
-    int n, height;
-    H h;
-    E ei;
-    vector<E> laz;
+template <typename T>
+struct BIT {
+    int n;
+    vector<T> dat;
 
-    DualSegmentTree(H h, E ei) : h(h), ei(ei) {}
+    BIT(int n) : n(n), dat(n + 1, 0) {}
 
-    void init(int n_) {
-        n = 1;
-        height = 0;
-        while (n < n_) n <<= 1, height++;
-        laz.assign(2 * n, ei);
+    T sum(int idx) {  // 1-indexed
+        T res(0);
+        for (int i = idx; i > 0; i -= i & -i) res += dat[i];
+        return res;
     }
 
-    inline void propagate(int k) {
-        if (laz[k] == ei) return;
-        laz[(k << 1) | 0] = h(laz[(k << 1) | 0], laz[k]);
-        laz[(k << 1) | 1] = h(laz[(k << 1) | 1], laz[k]);
-        laz[k] = ei;
+    T sum(int l, int r) {  // 0-indexed
+        return sum(r) - sum(l);
     }
 
-    inline void thrust(int k) {
-        for (int i = height; i; i--) propagate(k >> i);
+    void add(int idx, T x) {  // 0-indexed
+        idx++;
+        for (int i = idx; i <= n; i += i & -i) dat[i] += x;
     }
 
-    void update(int a, int b, E x) {
-        if (a >= b) return;
-        thrust(a += n);
-        thrust(b += n - 1);
-        for (int l = a, r = b + 1; l < r; l >>= 1, r >>= 1) {
-            if (l & 1) laz[l] = h(laz[l], x), l++;
-            if (r & 1) --r, laz[r] = h(laz[r], x);
+    int lower_bound(T x) {
+        if (x <= 0) return T(0);
+        int res = 0, r = 1;
+        while (r < n) r <<= 1;
+        for (; r > 0; r >>= 1) {
+            if (res + r <= n && dat[res + r] < x) {
+                x -= dat[res + r];
+                res += r;
+            }
         }
+        return res + 1;
     }
 
-    void update(int a, E x) {
-        thrust(a += n);
-        laz[a] = x;
-    }
-
-    E get(int a) {
-        thrust(a += n);
-        return laz[a];
+    void print() {
+        for (int i = 0; i < n; i++) cout << sum(i, i + 1) << " ";
+        cout << endl;
     }
 };
 
 signed main() {
-    int n, q;
-    cin >> n >> q;
+    int n;
+    cin >> n;
     HLD hld(n);
-    pair<int, int> ap[n - 1];
-    int a, b;
-    rep(i, n - 1) {
-        cin >> a >> b;
-        a--;
-        b--;
-        hld.add_edge(a, b);
-        ap[i] = {a, b};
+    int par[n] = {};
+    int k, c;
+    rep(i, n) {
+        cin >> k;
+        rep(j, k) {
+            cin >> c;
+            hld.add_edge(i, c);
+            par[c] = i;
+        }
     }
     hld.build();
-    auto h = [](int a, int b) { return b; };
-    int ei = -1;
-    DualSegmentTree<int> seg(h, ei);
-    seg.init(n);
-    seg.update(0, n, 0);
-    int u, v, c;
+    BIT<int> bit(n);
+    int q;
+    cin >> q;
+    int Q, u, v, w;
     rep(i, q) {
-        cin >> u >> v >> c;
-        u--;
-        v--;
-        auto ff = [&](int a, int b) { return seg.update(a, b, c); };
-        hld.for_each_edge(u, v, ff);
-    }
-    int ans;
-    auto ff = [&](int a, int b) { ans = seg.get(a); };
-    for (auto p : ap) {
-        hld.for_each_edge(p.first, p.second, ff);
-        cout << ans << endl;
+        cin >> Q;
+        if (Q == 0) {
+            cin >> v >> w;
+            auto f = [&](int a, int b) { return bit.add(a, w); };
+            hld.for_each_edge(par[v], v, f);
+        } else {
+            cin >> u;
+            int ans = 0;
+            auto f = [&](int a, int b) { ans += bit.sum(a, b); };
+            hld.for_each_edge(0, u, f);
+            cout << ans << endl;
+        }
     }
     return 0;
 }
