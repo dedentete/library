@@ -1,3 +1,7 @@
+/*
+    最小費用流 O(FElogV)
+    有向グラフであることに注意 !
+*/
 template <typename FT, typename CT>
 struct PrimalDual {
     struct edge {
@@ -33,7 +37,7 @@ struct PrimalDual {
             que.pop();
             int v = p.second;
             if (dist[v] < p.first) continue;
-            for (int i = 0; i < G[v].size(); i++) {
+            for (int i = 0; i < (int)G[v].size(); i++) {
                 edge& e = G[v][i];
                 if (e.cap == 0) continue;
                 if (dist[e.to] > dist[v] + e.cost + h[v] - h[e.to]) {
@@ -52,7 +56,7 @@ struct PrimalDual {
         while (f > 0) {
             Dijkstra(s);
             if (dist[t] == INF) return -1;
-            for (int v = 0; v < h.size(); v++) {
+            for (int v = 0; v < (int)h.size(); v++) {
                 if (dist[v] < INF) h[v] = h[v] + dist[v];
             }
             FT d = f;

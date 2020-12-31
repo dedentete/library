@@ -1,6 +1,6 @@
 /*
-    有向グラフであることに注意 !!
-    計算量 : O(FE)
+    最大流 O(FE)
+    有向グラフであることに注意 !
 */
 template <typename T>
 struct FordFulkerson {

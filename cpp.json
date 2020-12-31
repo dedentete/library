@@ -879,6 +879,36 @@
         ],
         "description": "BFS"
     },
+    "BFS01":{
+        "prefix": "BFS01",
+        "body": [
+            "vector<int> BFS01(int s, vector<vector<pair<int, int>>>& G,",
+            "                  const int INF = 1e9) {",
+            "    int V = G.size();",
+            "    vector<int> dist(V, INF);",
+            "    deque<int> que;",
+            "    dist[s] = 0;",
+            "    que.push_front(s);",
+            "    while (!que.empty()) {",
+            "        int v = que.front();",
+            "        que.pop_front();",
+            "        for (int i = 0; i < (int)G[v].size(); i++) {",
+            "            int to = G[v][i].first, cost = G[v][i].second;",
+            "            if (dist[to] != INF) continue;",
+            "            if (cost == 1) {",
+            "                que.push_back(to);",
+            "                dist[to] = dist[v] + 1;",
+            "            } else {",
+            "                que.push_front(to);",
+            "                dist[to] = dist[v];",
+            "            }",
+            "        }",
+            "    }",
+            "    return dist;",
+            "}"
+        ],
+        "description": "BFS01"
+    },
     "BipartiteMatching":{
         "prefix": "BipartiteMatching",
         "body": [
@@ -966,8 +996,8 @@
         "prefix": "Dinic",
         "body": [
             "/*",
-            "    有向グラフであることに注意 !!",
-            "    計算量 : O(EV^2)",
+            "    最大流 O(EV^2)",
+            "    有向グラフであることに注意 !",
             "*/",
             "template <typename T>",
             "struct Dinic {",
@@ -1041,8 +1071,8 @@
         "prefix": "FordFulkerson",
         "body": [
             "/*",
-            "    有向グラフであることに注意 !!",
-            "    計算量 : O(FE)",
+            "    最大流 O(FE)",
+            "    有向グラフであることに注意 !",
             "*/",
             "template <typename T>",
             "struct FordFulkerson {",
@@ -1185,6 +1215,10 @@
     "PrimalDual":{
         "prefix": "PrimalDual",
         "body": [
+            "/*",
+            "    最小費用流 O(FElogV)",
+            "    有向グラフであることに注意 !",
+            "*/",
             "template <typename FT, typename CT>",
             "struct PrimalDual {",
             "    struct edge {",
@@ -1220,7 +1254,7 @@
             "            que.pop();",
             "            int v = p.second;",
             "            if (dist[v] < p.first) continue;",
-            "            for (int i = 0; i < G[v].size(); i++) {",
+            "            for (int i = 0; i < (int)G[v].size(); i++) {",
             "                edge& e = G[v][i];",
             "                if (e.cap == 0) continue;",
             "                if (dist[e.to] > dist[v] + e.cost + h[v] - h[e.to]) {",
@@ -1239,7 +1273,7 @@
             "        while (f > 0) {",
             "            Dijkstra(s);",
             "            if (dist[t] == INF) return -1;",
-            "            for (int v = 0; v < h.size(); v++) {",
+            "            for (int v = 0; v < (int)h.size(); v++) {",
             "                if (dist[v] < INF) h[v] = h[v] + dist[v];",
             "            }",
             "            FT d = f;",

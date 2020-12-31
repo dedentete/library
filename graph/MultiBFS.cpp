@@ -1,9 +1,11 @@
-vector<int> BFS(int s, vector<vector<int>>& G) {
+vector<int> MultiBFS(vector<int> vs, vector<vector<int>>& G) {
     int V = G.size();
     vector<int> dist(V, -1);
     queue<int> que;
-    que.emplace(s);
-    dist[s] = 0;
+    for (int s : vs) {
+        que.emplace(s);
+        dist[s] = 0;
+    }
     while (!que.empty()) {
         int v = que.front();
         que.pop();

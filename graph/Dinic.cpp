@@ -1,6 +1,6 @@
 /*
-    有向グラフであることに注意 !!
-    計算量 : O(EV^2)
+    最大流 O(EV^2)
+    有向グラフであることに注意 !
 */
 template <typename T>
 struct Dinic {
