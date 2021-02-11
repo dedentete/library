@@ -30,7 +30,7 @@ struct BIT {
                 res += r;
             }
         }
-        return res + 1;
+        return res;
     }
 
     void print() {
