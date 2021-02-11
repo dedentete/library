@@ -1,6 +1,7 @@
 template <typename T>
-vector<T> Dijkstra(int s, vector<vector<pair<int, T>>>& G,
-                   /*vector<int> & prev,*/ const T INF = 1e9) {
+vector<T> Dijkstra(int s, vector<vector<pair<int, T>>>& G
+                   /*, vector<int> & prev*/) {
+    const T INF = numeric_limits<T>::max();
     using P = pair<T, int>;
     int V = G.size();
     vector<T> dist(V, INF);

@@ -1,17 +1,17 @@
-// AOJ-GRL-1-A
+// soundhound2018-summer-qual D
 #include <bits/stdc++.h>
 using namespace std;
-#define REP(i, a) for (int i = 0; i < (a); i++)
-#define ALL(a) (a).begin(), (a).end()
-typedef long long ll;
-typedef pair<int, int> P;
-const int INF = 1e9;
-const long long LINF = 1e18;
-const long long MOD = 1e9 + 7;
+#define rep(i, n) for (int i = 0; i < (int)(n); i++)
+#define ALL(v) (v).begin(), (v).end()
+using ll = long long;
+constexpr int INF = 1e9;
+constexpr long long LINF = 1e18;
+constexpr long long MOD = 1e9 + 7;
 
 template <typename T>
-vector<T> Dijkstra(int s, vector<vector<pair<int, T>>>& G,
-                   /*vector<int> & prev,*/ const T INF = 1e9) {
+vector<T> Dijkstra(int s, vector<vector<pair<int, T>>>& G
+                   /*, vector<int> & prev*/) {
+    const T INF = numeric_limits<T>::max();
     using P = pair<T, int>;
     int V = G.size();
     vector<T> dist(V, INF);
@@ -24,7 +24,7 @@ vector<T> Dijkstra(int s, vector<vector<pair<int, T>>>& G,
         que.pop();
         int v = p.second;
         if (dist[v] < p.first) continue;
-        for (int i = 0; i < G[v].size(); i++) {
+        for (int i = 0; i < (int)G[v].size(); i++) {
             int to = G[v][i].first;
             T cost = G[v][i].second;
             if (dist[to] > dist[v] + cost) {
@@ -38,23 +38,31 @@ vector<T> Dijkstra(int s, vector<vector<pair<int, T>>>& G,
 }
 
 signed main() {
-    int v, e, r;
-    cin >> v >> e >> r;
+    int n, m, s, t;
+    cin >> n >> m >> s >> t;
+    s--;
+    t--;
+    int u, v;
+    ll a, b;
     using P = pair<int, ll>;
-    vector<vector<P>> G(v);
-    int s, t;
-    ll d;
-    REP(i, e) {
-        cin >> s >> t >> d;
-        G[s].emplace_back(t, d);
+    vector<vector<P>> Ga(n), Gb(n);
+    rep(i, m) {
+        cin >> u >> v >> a >> b;
+        u--;
+        v--;
+        Ga[u].emplace_back(v, a);
+        Ga[v].emplace_back(u, a);
+        Gb[u].emplace_back(v, b);
+        Gb[v].emplace_back(u, b);
     }
-    vector<ll> dist = Dijkstra(r, G, LINF);
-    REP(i, v) {
-        if (dist[i] == LINF) {
-            cout << "INF" << endl;
-        } else {
-            cout << dist[i] << endl;
-        }
+    auto dista = Dijkstra(s, Ga), distb = Dijkstra(t, Gb);
+    ll ans[n];
+    for (int v = n - 1; v >= 0; v--) {
+        ans[v] = (ll)1e15 - (dista[v] + distb[v]);
+        if (v != n - 1) ans[v] = max(ans[v], ans[v + 1]);
+    }
+    rep(v, n) {
+        cout << ans[v] << endl;
     }
     return 0;
 }

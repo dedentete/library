@@ -1,5 +1,6 @@
 template <typename T>
-T TSP(int s, vector<vector<pair<int, T>>>& G, const T INF = 1e9) {
+T TSP(int s, vector<vector<pair<int, T>>>& G) {
+    const T INF = numeric_limits<T>::max() / 2;
     int V = G.size();
     vector<vector<T>> dp(1 << V, vector<T>(V, INF));
     dp[0][s] = 0;

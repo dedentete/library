@@ -1,4 +1,4 @@
-// ABC180-E
+// ABC180 E
 #include <bits/stdc++.h>
 using namespace std;
 #define rep(i, n) for (int i = 0; i < (int)(n); i++)
@@ -9,7 +9,8 @@ constexpr long long LINF = 1e18;
 constexpr long long MOD = 1e9 + 7;
 
 template <typename T>
-T TSP(int s, vector<vector<pair<int, T>>>& G, const T INF = 1e9) {
+T TSP(int s, vector<vector<pair<int, T>>>& G) {
+    const T INF = numeric_limits<T>::max() / 2;
     int V = G.size();
     vector<vector<T>> dp(1 << V, vector<T>(V, INF));
     dp[0][s] = 0;
@@ -40,6 +41,6 @@ signed main() {
                 j, abs(x[i] - x[j]) + abs(y[i] - y[j]) + max(0, z[j] - z[i]));
         }
     }
-    cout << TSP(0, G, LINF) << endl;
+    cout << TSP(0, G) << endl;
     return 0;
 }
