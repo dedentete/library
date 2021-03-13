@@ -25,8 +25,8 @@ struct edge {
     vector<ll> dist = BellmanFord(V, s, es, LINF);
 */
 template <typename T>
-vector<T> BellmanFord(int V, int s, vector<edge<T>>& es, const T INF = 1e9) {
-    int E = es.size();
+vector<T> BellmanFord(int V, int s, vector<edge<T>>& es) {
+    const T INF = numeric_limits<T>::max();
     vector<T> dist(V, INF);
     dist[s] = 0;
     for (int i = 0; i < V - 1; i++) {
@@ -67,12 +67,12 @@ signed main() {
         cin >> s >> t >> d;
         es.emplace_back(s, t, d);
     }
-    vector<ll> dist = BellmanFord(v, r, es, LINF);
+    vector<ll> dist = BellmanFord(v, r, es);
     if (dist.size() == 0) {
         cout << "NEGATIVE CYCLE" << endl;
     } else {
         REP(i, v) {
-            if (dist[i] == LINF)
+            if (dist[i] == LLONG_MAX)
                 cout << "INF" << endl;
             else
                 cout << dist[i] << endl;

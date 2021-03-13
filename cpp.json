@@ -820,8 +820,8 @@
             "    vector<ll> dist = BellmanFord(V, s, es, LINF);",
             "*/",
             "template <typename T>",
-            "vector<T> BellmanFord(int V, int s, vector<edge<T>>& es, const T INF = 1e9) {",
-            "    int E = es.size();",
+            "vector<T> BellmanFord(int V, int s, vector<edge<T>>& es) {",
+            "    const T INF = numeric_limits<T>::max();",
             "    vector<T> dist(V, INF);",
             "    dist[s] = 0;",
             "    for (int i = 0; i < V - 1; i++) {",
@@ -990,81 +990,6 @@
             "}"
         ],
         "description": "Dijkstra"
-    },
-    "Dinic":{
-        "prefix": "Dinic",
-        "body": [
-            "/*",
-            "    最大流 O(EV^2)",
-            "    有向グラフであることに注意 !",
-            "*/",
-            "template <typename T>",
-            "struct Dinic {",
-            "    struct edge {",
-            "        int to;",
-            "        T cap;",
-            "        int rev;",
-            "        edge(int to, T cap, int rev) : to(to), cap(cap), rev(rev) {}",
-            "    };",
-            "",
-            "    vector<vector<edge>> G;",
-            "    vector<int> level, itr;",
-            "",
-            "    Dinic(int n) : G(n), level(n), itr(n) {}",
-            "",
-            "    void add_edge(int from, int to, T cap) {",
-            "        G[from].emplace_back(to, cap, G[to].size());",
-            "        G[to].emplace_back(from, 0, G[from].size() - 1);",
-            "    }",
-            "",
-            "    void bfs(int s) {",
-            "        fill(level.begin(), level.end(), -1);",
-            "        queue<int> que;",
-            "        que.emplace(s);",
-            "        level[s] = 0;",
-            "        while (!que.empty()) {",
-            "            int v = que.front();",
-            "            que.pop();",
-            "            for (edge& e : G[v]) {",
-            "                if (e.cap > 0 && level[e.to] < 0) {",
-            "                    level[e.to] = level[v] + 1;",
-            "                    que.push(e.to);",
-            "                }",
-            "            }",
-            "        }",
-            "    }",
-            "",
-            "    T dfs(int v, int t, T f) {",
-            "        if (v == t) return f;",
-            "        for (edge& e : G[v]) {",
-            "            if (e.cap > 0 && level[v] < level[e.to]) {",
-            "                T d = dfs(e.to, t, min(f, e.cap));",
-            "                if (d > 0) {",
-            "                    e.cap -= d;",
-            "                    G[e.to][e.rev].cap += d;",
-            "                    return d;",
-            "                }",
-            "            }",
-            "        }",
-            "        return 0;",
-            "    }",
-            "",
-            "    T flow(int s, int t, T INF = 1e9) {",
-            "        T fl = 0;",
-            "        while (true) {",
-            "            bfs(s);",
-            "            if (level[t] < 0) return fl;",
-            "            fill(itr.begin(), itr.end(), 0);",
-            "            T f;",
-            "            while ((f = dfs(s, t, INF)) > 0) {",
-            "                fl += f;",
-            "            }",
-            "        }",
-            "        return fl;",
-            "    }",
-            "};"
-        ],
-        "description": "Dinic"
     },
     "FordFulkerson":{
         "prefix": "FordFulkerson",
@@ -2137,6 +2062,22 @@
         ],
         "description": "PascalTriangle"
     },
+    "pow":{
+        "prefix": "pow",
+        "body": [
+            "template <typename T>",
+            "T pow(T x, T n) {",
+            "    T res = 1;",
+            "    while (n > 0) {",
+            "        if (n & 1) res = res * x;",
+            "        x = x * x;",
+            "        n >>= 1;",
+            "    }",
+            "    return res;",
+            "}"
+        ],
+        "description": "pow"
+    },
     "PrimeFactor":{
         "prefix": "PrimeFactor",
         "body": [
@@ -2344,8 +2285,8 @@
         ],
         "description": "Zalgorithm"
     },
-    "acl":{
-        "prefix": "acl",
+    "atcoder":{
+        "prefix": "atcoder",
         "body": [
             "#include <bits/stdc++.h>",
             "#include <atcoder/all>",
@@ -2363,7 +2304,7 @@
             "    return 0;",
             "}"
         ],
-        "description": "acl"
+        "description": "atcoder"
     },
     "chmax":{
         "prefix": "chmax",

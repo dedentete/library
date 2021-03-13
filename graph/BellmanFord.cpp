@@ -14,8 +14,8 @@ struct edge {
     vector<ll> dist = BellmanFord(V, s, es, LINF);
 */
 template <typename T>
-vector<T> BellmanFord(int V, int s, vector<edge<T>>& es, const T INF = 1e9) {
-    int E = es.size();
+vector<T> BellmanFord(int V, int s, vector<edge<T>>& es) {
+    const T INF = numeric_limits<T>::max();
     vector<T> dist(V, INF);
     dist[s] = 0;
     for (int i = 0; i < V - 1; i++) {

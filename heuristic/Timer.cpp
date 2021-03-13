@@ -1,12 +1,12 @@
 struct Timer {
-    chrono::high_resolution_clock::time_point start, now;
+    chrono::system_clock::time_point start, now;
 
     Timer() {
-        start = chrono::high_resolution_clock::now();
+        start = chrono::system_clock::now();
     }
 
     double getTime() {
-        now = chrono::high_resolution_clock::now();
+        now = chrono::system_clock::now();
         return chrono::duration<double>(now - start).count();
     }
 };
