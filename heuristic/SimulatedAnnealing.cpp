@@ -1,7 +1,9 @@
-struct XORShift {
+constexpr double TIMELIMIT = 1.9;
+
+struct XorShift {
     unsigned int x, y, z, w, t;
 
-    XORShift(int seed) {
+    XorShift(int seed) {
         mt19937 rnd(seed);
         x = rnd();
         y = rnd();
@@ -21,44 +23,60 @@ struct XORShift {
 } rnd(rand());
 
 struct Timer {
-    chrono::high_resolution_clock::time_point start, now;
+    chrono::system_clock::time_point start, now;
 
     Timer() {
-        start = chrono::high_resolution_clock::now();
+        start = chrono::system_clock::now();
     }
 
     double getTime() {
-        now = chrono::high_resolution_clock::now();
+        now = chrono::system_clock::now();
         return chrono::duration<double>(now - start).count();
     }
 };
 
-struct STATE {
-    score;
+struct State {
+    int score;
 };
 
-void init(STATE& state) {}
+void calc(State& state) {
+    
+}
 
-void modify(STATE& state) {}
+void init(State& state) {
+    
+    calc(state);
+}
 
-STATE state;
-constexpr double TIMELIMIT = 1.9;
+void modify(State& state) {
+    
+    calc(state);
+}
 
-void SA() {
-    init(state);
-    double starttemp, endtemp;
+void solve(State& state) {
+    int steps = 0;
     Timer tmr;
+    double nowclock;
     double startclock = tmr.getTime();
+    // double starttemp, endtemp;
     while (true) {
-        double nowclock = tmr.getTime();
+        nowclock = tmr.getTime();
         if (nowclock - startclock > TIMELIMIT) break;
-        STATE newstate = state;
+        State newstate = state;
         modify(newstate);
+        if (newstate.score > state.score) {
+            state = newstate;
+        }
+        /*
         double temp = starttemp + (endtemp - starttemp) *
                                       (nowclock - startclock) / TIMELIMIT;
         double prob = exp((newstate.score - state.score) / temp);
         if (prob > (rnd.rand() % (int)1e9) / 1e9) {
             state = newstate;
         }
+        */
+        steps++;
     }
+    cerr << "score : " << state.score << endl;
+    cerr << "steps : " << steps << endl;
 }

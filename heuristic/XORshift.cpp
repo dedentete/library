@@ -1,7 +1,7 @@
-struct XORShift {
+struct XorShift {
     unsigned int x, y, z, w, t;
 
-    XORShift(int seed) {
+    XorShift(int seed) {
         mt19937 rnd(seed);
         x = rnd();
         y = rnd();
