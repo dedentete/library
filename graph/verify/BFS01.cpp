@@ -1,4 +1,4 @@
-// ABC-186-E
+// ABC-184-E
 #include <bits/stdc++.h>
 using namespace std;
 #define rep(i, n) for (int i = 0; i < (int)(n); i++)
@@ -10,8 +10,8 @@ constexpr long long MOD = 1e9 + 7;
 
 int dy[] = {0, 1, 0, -1}, dx[] = {1, 0, -1, 0};
 
-vector<int> BFS01(int s, vector<vector<pair<int, int>>>& G,
-                  const int INF = 1e9) {
+vector<int> BFS01(int s, vector<vector<pair<int, int>>>& G) {
+    const int INF = INT_MAX;
     int V = G.size();
     vector<int> dist(V, INF);
     deque<int> que;
@@ -66,6 +66,6 @@ signed main() {
         }
     }
     auto dist = BFS01(s, G);
-    cout << (dist[g] != INF ? dist[g] : -1) << endl;
+    cout << (dist[g] != INT_MAX ? dist[g] : -1) << endl;
     return 0;
 }

@@ -1,5 +1,5 @@
-vector<int> BFS01(int s, vector<vector<pair<int, int>>>& G,
-                  const int INF = 1e9) {
+vector<int> BFS01(int s, vector<vector<pair<int, int>>>& G) {
+    const int INF = INT_MAX;
     int V = G.size();
     vector<int> dist(V, INF);
     deque<int> que;
