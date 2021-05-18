@@ -1813,14 +1813,14 @@
     "direction4":{
         "prefix": "direction4",
         "body": [
-            "int dy[] = {0, 1, 0, -1}, dx[] = {1, 0, -1, 0};"
+            "constexpr int dx[] = {0, 1, 0, -1}, dy[] = {1, 0, -1, 0};"
         ],
         "description": "direction4"
     },
     "direction8":{
         "prefix": "direction8",
         "body": [
-            "int dy[] = {0, 1, 1, 1, 0, -1, -1, -1}, dx[] = {1, 1, 0, -1, -1, -1, 0, 1};"
+            "constexpr int dx[] = {0, 1, 1, 1, 0, -1, -1, -1}, dy[] = {1, 1, 0, -1, -1, -1, 0, 1};"
         ],
         "description": "direction8"
     },
@@ -1851,12 +1851,10 @@
             "#define rep(i, n) for (int i = 0; i < (int)(n); i++)",
             "#define ALL(v) (v).begin(), (v).end()",
             "using ll = long long;",
-            "constexpr int INF = 1e9;",
-            "constexpr long long LINF = 1e18;",
-            "constexpr long long MOD = 1e9 + 7;",
+            "constexpr int MOD = 1000000007;",
             "",
             "signed main() {",
-            "",
+            "    ",
             "    return 0;",
             "}"
         ],
@@ -1870,9 +1868,7 @@
             "#define rep(i, n) for (int i = 0; i < (int)(n); i++)",
             "#define ALL(v) (v).begin(), (v).end()",
             "using ll = long long;",
-            "constexpr int INF = 1e9;",
-            "constexpr long long LINF = 1e18;",
-            "constexpr long long MOD = 1e9 + 7;",
+            "constexpr int MOD = 1000000007;",
             "",
             "signed main() {",
             "    ",
