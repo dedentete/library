@@ -1,19 +1,14 @@
-// ABC-184-E
+// typical90-54
 #include <bits/stdc++.h>
 using namespace std;
 #define rep(i, n) for (int i = 0; i < (int)(n); i++)
 #define ALL(v) (v).begin(), (v).end()
 using ll = long long;
-constexpr int INF = 1e9;
-constexpr long long LINF = 1e18;
-constexpr long long MOD = 1e9 + 7;
-
-int dy[] = {0, 1, 0, -1}, dx[] = {1, 0, -1, 0};
+constexpr int MOD = 1000000007;
 
 vector<int> BFS01(int s, vector<vector<pair<int, int>>>& G) {
-    const int INF = INT_MAX;
     int V = G.size();
-    vector<int> dist(V, INF);
+    vector<int> dist(V, -1);
     deque<int> que;
     dist[s] = 0;
     que.push_front(s);
@@ -22,13 +17,13 @@ vector<int> BFS01(int s, vector<vector<pair<int, int>>>& G) {
         que.pop_front();
         for (int i = 0; i < (int)G[v].size(); i++) {
             int to = G[v][i].first, cost = G[v][i].second;
-            if (dist[to] != INF) continue;
+            if (dist[to] != -1) continue;
             if (cost == 1) {
-                que.push_back(to);
                 dist[to] = dist[v] + 1;
+                que.push_back(to);
             } else {
-                que.push_front(to);
                 dist[to] = dist[v];
+                que.push_front(to);
             }
         }
     }
@@ -36,36 +31,23 @@ vector<int> BFS01(int s, vector<vector<pair<int, int>>>& G) {
 }
 
 signed main() {
-    int h, w;
-    cin >> h >> w;
-    string a[h];
-    rep(i, h) {
-        cin >> a[i];
-    }
-    auto f = [&](int y, int x) { return y * w + x; };
-    vector<vector<pair<int, int>>> G(h * w + 26);
-    int s = -1, g = -1;
-    rep(i, h) {
-        rep(j, w) {
-            if (a[i][j] == '#') continue;
-            if (a[i][j] == 'S') {
-                s = f(i, j);
-            } else if (a[i][j] == 'G') {
-                g = f(i, j);
-            } else if ('a' <= a[i][j] && a[i][j] <= 'z') {
-                G[f(i, j)].emplace_back(h * w + a[i][j] - 'a', 1);
-                G[h * w + a[i][j] - 'a'].emplace_back(f(i, j), 0);
-            }
-            rep(k, 4) {
-                int ny = i + dy[k], nx = j + dx[k];
-                if (0 <= ny && ny < h && 0 <= nx && nx < w &&
-                    a[ny][nx] != '#') {
-                    G[f(i, j)].emplace_back(f(ny, nx), 1);
-                }
-            }
+    int n, m;
+    cin >> n >> m;
+    vector<vector<pair<int, int>>> G(n + m);
+    rep(i, m) {
+        int k;
+        cin >> k;
+        int r;
+        rep(j, k) {
+            cin >> r;
+            r--;
+            G[r].emplace_back(n + i, 1);
+            G[n + i].emplace_back(r, 0);
         }
     }
-    auto dist = BFS01(s, G);
-    cout << (dist[g] != INT_MAX ? dist[g] : -1) << endl;
+    auto dist = BFS01(0, G);
+    rep(i, n) {
+        cout << dist[i] << endl;
+    }
     return 0;
 }
