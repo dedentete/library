@@ -6,25 +6,24 @@
 */
 template <typename T>
 struct Matrix {
-    typedef vector<vector<T>> mat;
+    using mat = vector<vector<T>>;
 
     mat A;
 
-    Matrix() {}
     Matrix(int h, int w, T x = T(0)) : A(h, vector<T>(w, x)) {}
     Matrix(mat A) : A(A) {}
 
     int size() const {
         return A.size();
     }
-    const vector<T>& operator[](int i) const {
+    const vector<T> &operator[](int i) const {
         return A[i];
     }
-    vector<T>& operator[](int i) {
+    vector<T> &operator[](int i) {
         return A[i];
     }
 
-    Matrix& operator+=(const Matrix& B) {
+    Matrix &operator+=(const Matrix &B) {
         assert(A.size() == B.size());
         assert(A[0].size() == B[0].size());
         for (int i = 0; i < A.size(); i++) {
@@ -35,24 +34,24 @@ struct Matrix {
         return *this;
     }
 
-    Matrix& operator-=(const Matrix& B) {
-        assert((int)A.size() == (int)B.size());
+    Matrix &operator-=(const Matrix &B) {
+        assert(A.size() == B.size());
         assert(A[0].size() == B[0].size());
-        for (int i = 0; i < (int)A.size(); i++) {
-            for (int j = 0; j < (int)A[0].size(); j++) {
+        for (int i = 0; i < A.size(); i++) {
+            for (int j = 0; j < A[0].size(); j++) {
                 A[i][j] -= B[i][j];
             }
         }
         return *this;
     }
 
-    Matrix& operator*=(const Matrix& B) {
+    Matrix &operator*=(const Matrix &B) {
         assert((int)A[0].size() == (int)B.size());
         int h = A.size(), w = B[0].size();
         Matrix C(h, w);
         for (int i = 0; i < h; i++) {
             for (int j = 0; j < w; j++) {
-                for (int k = 0; k < (int)B.size(); k++) {
+                for (int k = 0; k < B.size(); k++) {
                     C[i][j] += A[i][k] * B[k][j];
                 }
             }
@@ -61,13 +60,13 @@ struct Matrix {
         return *this;
     }
 
-    Matrix operator+(const Matrix& B) const {
+    Matrix operator+(const Matrix &B) const {
         return (Matrix(*this) += B);
     }
-    Matrix operator-(const Matrix& B) const {
+    Matrix operator-(const Matrix &B) const {
         return (Matrix(*this) -= B);
     }
-    Matrix operator*(const Matrix& B) const {
+    Matrix operator*(const Matrix &B) const {
         return (Matrix(*this) *= B);
     }
 

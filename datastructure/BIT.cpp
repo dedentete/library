@@ -33,6 +33,10 @@ struct BIT {
         return res;
     }
 
+    int upper_bound(T x) {
+        return lower_bound(x + 1);
+    }
+
     void print() {
         for (int i = 0; i < n; i++) cout << sum(i, i + 1) << " ";
         cout << endl;

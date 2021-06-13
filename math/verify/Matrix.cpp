@@ -110,20 +110,21 @@ struct Mint {
 */
 template <typename T>
 struct Matrix {
-    typedef vector<vector<T>> mat;
+    using mat = vector<vector<T>>;
 
     mat A;
 
-    Matrix() {}
     Matrix(int h, int w, T x = T(0)) : A(h, vector<T>(w, x)) {}
     Matrix(mat A) : A(A) {}
 
     int size() const {
         return A.size();
     }
+
     const vector<T> &operator[](int i) const {
         return A[i];
     }
+    
     vector<T> &operator[](int i) {
         return A[i];
     }
@@ -151,7 +152,7 @@ struct Matrix {
     }
 
     Matrix &operator*=(const Matrix &B) {
-        assert(A[0].size() == B.size());
+        assert((int)A[0].size() == (int)B.size());
         int h = A.size(), w = B[0].size();
         Matrix C(h, w);
         for (int i = 0; i < h; i++) {
