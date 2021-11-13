@@ -11,7 +11,7 @@ struct Mint {
     Mint() : x(0) {}
     Mint(long long t) : x(t >= 0 ? (t % MOD) : (MOD - (-t) % MOD) % MOD) {}
 
-    Mint pow(int n) {
+    Mint pow(long long n) {
         Mint res(1), t(x);
         while (n > 0) {
             if (n & 1) res *= t;
