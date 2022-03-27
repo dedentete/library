@@ -56,21 +56,20 @@ void modify(State& state) {
 void solve(State& state) {
     int steps = 0;
     Timer tmr;
-    double nowclock;
-    double startclock = tmr.getTime();
-    // double starttemp, endtemp;
+    double start_time = tmr.getTime();
+    // double start_temp, end_temp;
     while (true) {
-        nowclock = tmr.getTime();
-        if (nowclock - startclock > TIMELIMIT) break;
+        double current_time = tmr.getTime();
+        if (current_time - start_time > TIMELIMIT) break;
         State newstate = state;
         modify(newstate);
         if (newstate.score > state.score) {
             state = newstate;
         }
         /*
-        double temp = starttemp + (endtemp - starttemp) *
-                                      (nowclock - startclock) / TIMELIMIT;
-        double prob = exp((newstate.score - state.score) / temp);
+        double temp = start_temp + (end_temp - start_temp) *
+                                      (current_time - start_time) / TIMELIMIT;
+        double prob = exp((newstate.score - state.score) / _temp);
         if (prob > (rnd.rand() % (int)1e9) / 1e9) {
             state = newstate;
         }

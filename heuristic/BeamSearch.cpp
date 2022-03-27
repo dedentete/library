@@ -1,4 +1,4 @@
-constexpr int BEAM_SIZE;
+constexpr int BEAM_SIZE = 1;
 
 struct Timer {
     chrono::system_clock::time_point start, now;
@@ -38,10 +38,10 @@ void solve(State& state) {
     priority_queue<State> que;
     que.emplace(state);
     Timer tmr;
-    double startclock = tmr.getTime();
+    double start_time = tmr.getTime();
     rep(_, ) {
         priority_queue<State> nxt;
-        while (not que.empty()) {
+        while (!que.empty()) {
             State state = que.top();
             que.pop();
             
@@ -50,8 +50,8 @@ void solve(State& state) {
             que.emplace(nxt.top());
             nxt.pop();
         }
-        double nowclock = tmr.getTime();
-        if (nowclock - startclock > TIMELIMIT) break;
+        double current_time = tmr.getTime();
+        if (current_time - start_time > TIMELIMIT) break;
     }
     state = que.top();
     cerr << "state : " << state.score << endl;
